@@ -4,11 +4,13 @@ import { ValidationPipe } from '@nestjs/common';
 import * as swaggerUi from 'swagger-ui-express';
 import * as fs from 'fs';
 import * as yaml from 'yaml';
+import { ExceptionsFilter } from './presentation/@shared/filters/exceptions.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
   app.useGlobalPipes(new ValidationPipe());
   app.setGlobalPrefix('/api/v1');
+  app.useGlobalFilters(new ExceptionsFilter());
   const swaggerFilePath = './docs/api.yaml';
   const swaggerDocument = yaml.parse(fs.readFileSync(swaggerFilePath, 'utf8'));
   app.use(`/api/v1/doc`, swaggerUi.serve, swaggerUi.setup(swaggerDocument));

@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { ITaskRepository } from '../repositories/task.repository.inteface';
 import { UpdateTaskDto } from 'src/presentation/task/dtos/update-task.dto';
+import { TaskNotFoundException } from '../exceptions/task.exceptions';
 
 @Injectable()
 export class UpdateTaskUseCase {
@@ -22,7 +23,7 @@ export class UpdateTaskUseCase {
 
     const task = await this.taskRepository.findById(id);
     if (!task) {
-      throw new UnprocessableEntityException('Task not found');
+      throw new TaskNotFoundException();
     }
 
     await this.taskRepository.update(id, input);

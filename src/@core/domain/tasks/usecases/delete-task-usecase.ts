@@ -4,6 +4,7 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { ITaskRepository } from '../repositories/task.repository.inteface';
+import { TaskNotFoundException } from '../exceptions/task.exceptions';
 
 @Injectable()
 export class DeleteTaskUseCase {
@@ -14,7 +15,7 @@ export class DeleteTaskUseCase {
     const task = await this.taskRepository.findById(id);
 
     if (!task) {
-      throw new UnprocessableEntityException('Task not found');
+      throw new TaskNotFoundException();
     }
 
     return await this.taskRepository.delete(id);
