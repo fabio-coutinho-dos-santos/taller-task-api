@@ -2,7 +2,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ITaskRepository } from '../repositories/task.repository.inteface';
 import { CreateTaskDto } from 'src/presentation/task/dtos/create-task.dto';
 import { Task } from '../entities/task.entity';
-import { TaskSchema } from 'src/infra/database/typeorm/tasks/task.schema';
 import { TaskMapper } from 'src/infra/database/typeorm/tasks/task.mapper';
 
 @Injectable()

@@ -1,9 +1,6 @@
 services:
   svc-task-api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    working_dir: /app
+    build: .
     ports:
       - '3000:3000'
     env_file:
