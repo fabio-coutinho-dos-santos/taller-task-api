@@ -1,9 +1,12 @@
+version: '3.8'
+
 services:
-  svc-task-api:
+  task-api:
     build: .
+    container_name: task-api
     ports:
       - '3000:3000'
-    env_file:
-      - .env
     volumes:
-      - .:/app
+      - ./src:/app/src
+    environment:
+      - NODE_ENV=production
