@@ -73,8 +73,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ExceptionResponse"
-        "422":
-          description: Unprocessable Entity
+        "404":
+          description: Not Found
           content:
             application/json:
               schema:
@@ -116,6 +116,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ExceptionResponse"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExceptionResponse"
 
 components:
   schemas:
@@ -124,10 +130,14 @@ components:
       properties:
         message:
           type: string
-        error:
-          type: string
         statusCode:
           type: integer
+        timestamp:
+          type: string
+          format: date-time
+        path:
+          type: string
+          example: "/api/v1/tasks"
 
     TaskResponse:
       type: object
