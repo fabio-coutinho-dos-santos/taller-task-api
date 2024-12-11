@@ -1,0 +1,140 @@
+openapi: 3.0.1
+info:
+  title: Task Api
+  version: 1.0.0
+servers:
+  - url: "http://localhost:3000"
+    description: "Local Server"
+
+paths:
+  /api/v1/tasks:
+    get:
+      tags:
+        - Tasks
+      summary: Get all
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TaskResponse"
+
+    post:
+      tags:
+        - Tasks
+      summary: Create a new task
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: "Task 1"
+                completed:
+                  type: boolean
+      responses:
+        "201":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExceptionResponse"
+
+  /api/v1/tasks/{id}:
+    delete:
+      tags:
+        - Tasks
+      summary: Delete a task
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Task ID
+          schema:
+            type: number
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExceptionResponse"
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExceptionResponse"
+
+    put:
+      tags:
+        - Tasks
+      summary: Upate a task
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Task ID
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: "Task 1"
+                completed:
+                  type: boolean
+      responses:
+        "201":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExceptionResponse"
+
+components:
+  schemas:
+    ExceptionResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        error:
+          type: string
+        statusCode:
+          type: integer
+
+    TaskResponse:
+      type: object
+      properties:
+        id:
+          type: number
+        title:
+          type: string
+        completed:
+          type: boolean
